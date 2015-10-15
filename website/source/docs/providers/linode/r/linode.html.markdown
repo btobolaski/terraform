@@ -38,8 +38,8 @@ The following arguments are supported:
 * `group` - (Optional) The group that the linode is diplayed under in the web ui
 * `region` - (Required) The Linode region to create the server in. The value
   must match the [Location string here][1] exactly.
-* `size` - (Required) The number of megabytes of ram in the size that you would
-  like.
+* `size` - (Required) The number of megabytes of ram in the linode plan size that 
+  you would like.
 * `private_networking` - (Optional) Whether or not to enable private
   networking. **NOTE** This can only be enabled on an active server. Once it
   is enabled, it can't be disabled without destroying the server.
@@ -55,6 +55,14 @@ The following arguments are supported:
   automatically set up the private ip address. If this is not enabled, you'll
   need to manually configure the server to have the specified private ip
   address.
+* `disk_expansion` - (Optional) - Setting this to true will automatically expand 
+the root volume if the size of the linode plan is increased.  Setting this value 
+will prevent downsizing without manually shrinking the volume prior to decreasing 
+the size. Defaults to `false`
+* `swap_size` - (Optional) - Sets the size of the swap partition on a Linode in MB.
+  At this time, this cannot be modified by Terraform after initial provisioning.
+  If manually modified via the Web GUI, this value will reflect such modification.
+  This value can be set to 0 to create a Linode without a swap partition.  Defaults to 256.
 
 [1]:https://www.linode.com/api/utility/avail.datacenters
 
@@ -79,3 +87,8 @@ The following attributes are exported:
 * `helper_distro` - Whether the distro helper is enabled.
 * `manage_private_ip_automatically` - wether the private ip is handled
   automatically
+* `disk_expansion` - Whether or not automatic disk expansion upon upsize is enabled
+* `plan_storage` - The size of the Linode plans storage capacity in MB
+* `plan_storage_utilized` - The sum of the size of all the Linode's disks in MB
+* `swap_size` - The size of the swap partition.  A value of `0` indicates no swap
+  partition exists.
